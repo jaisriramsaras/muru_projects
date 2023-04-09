@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap);
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: whitesmoke;
+        
+      }
+      .numbox{
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-bottom: 20px;
+        margin-top: 2%;
+        
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        height: 100vh;
+        margin: 0 auto;
+        gap: 20px;
+        justify-content: center;
+      }
+      .form-item {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-item.has-error .form-label {
+        color: red;
+      }
+      .form-item.has-error .form-input {
+        border-color: red;
+        background-color: #ffe1e1;
+      }
+      .form-label {
+        font-size: 16px;
+        color: #161616;
+        margin-bottom: 6px;
+      }
+      .form-input {
+        border: 2px solid #8d8d8d;
+        border-radius: 4px;
+        background: #f9f9f9;
+        height: 30px;
+        padding: 0 16px;
+        outline: none;
+      }
+      .form-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .form-content {
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+        background-color: lightgrey;
+      }
+      .form-content.active {
+        display: flex;
+      }
+
+      .btn {
+        border-radius: 4px;
+        border: 2px solid transparent;
+        padding: 10px 24px;
+        font-size: 16px;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+      .btn.bordered {
+        border-color: #1e4dba;
+        color: #1e4dba;
+      }
+      .btn.primary {
+        background-color: #1e4dba;
+        color: #fff;
+      }
+      .btn[disabled] {
+        cursor: not-allowed;
+      }
+
+      .wizard {
+        position: relative;
+        display: flex;
+        width: 100%;
+      }
+      .wizard:before {
+        content: "";
+        position: absolute;
+        background-color: #fff;
+        height: 2px;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      .wizard-bar {
+        position: absolute;
+        background-color: #1e4dba;
+        height: 2px;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        transition: 0.3s ease;
+      }
+      .wizard-list {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .wizard-item {
+        z-index: 2;
+        transition: 0.4s ease;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid #1e4dba;
+        color: #1e4dba;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        background-color: #f4f4f4;
+      }
+      .wizard-item.active {
+        background-color: #1e4dba;
+        color: #fff;
+      }
+      .wizard-item.active.with-image:after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 8.9087L17.1443 6L9.97468 13.191L6.8557 10.0399L4 12.888L8.53671 17.4126C8.91618 17.7888 9.4295 18 9.96456 18C10.4996 18 11.0129 17.7888 11.3924 17.4126L20 8.9087Z' fill='%23ffffff'/%3E%3C/svg%3E");
+      }
+      .wizard-item.with-image:after {
+        content: "";
+        width: 24px;
+        height: 24px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 8.9087L17.1443 6L9.97468 13.191L6.8557 10.0399L4 12.888L8.53671 17.4126C8.91618 17.7888 9.4295 18 9.96456 18C10.4996 18 11.0129 17.7888 11.3924 17.4126L20 8.9087Z' fill='%231E4DBA'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+      }
+
+      .typewriter {
+        overflow: hidden; /* Ensures the content is not revealed until the animation */
+        border-right: 0.15em solid orange; /* The typwriter cursor */
+        white-space: nowrap; /* Keeps the content on a single line */
+        margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+        letter-spacing: 0.15em; /* Adjust as needed */
+        animation: typing 3.5s steps(40, end),
+          blink-caret 0.75s step-end infinite;
+      }
+
+      /* The typing effect */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      /* The typewriter cursor effect */
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: orange;
+        }
+      }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  </head>
+
+  <body>
+  <div style="min-height:1000px; overflow-y: scroll ;" > 
+    <h1 style="text-align: center">Your step by step guide to java</h1>
+    <div class="numbox" >
+      <div class="wizard">
+        <div class="wizard-bar" style="width: 0" data-wizard-bar></div>
+        <ul class="wizard-list">
+          <li class="wizard-item" data-wizard-item>1</li>
+          <li class="wizard-item" data-wizard-item>2</li>
+          <li class="wizard-item" data-wizard-item>3</li>
+          <li class="wizard-item" data-wizard-item>4</li>
+          <li class="wizard-item with-image" data-wizard-item></li>
+        </ul>
+      </div>
+    </div>
+   
+  
+    
+    <form class="form">
+     
+      <div class="form-content" data-form-tab>
+        <div style="background-color: lightgray; padding: 15px; line-height: 2;  ">
+          <h1>Welcome to java learnings</h1>
+          <p  id="loadtap1">
+            <img src="data:image/jpeg;base64,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" alt="">
+          </p>
+       <hr>
+        <div>
+          <div style="float:left; width:75% ;" >
+            <p id="loadjdk" >
+
+            </p>
+          </div>
+          <div  style="float: right; width:20%;  " >
+           <div id="ucase1" onclick="playUcase1()"  style="height: 30px;width: 100px; float:right;border-radius: 10px;margin-bottom: 5px;color: white;background-color: #1e4dba; clear: both;text-align: center; cursor: pointer;" >
+             JDk
+           </div>
+         </div>
+        </div>
+          
+          <hr>
+        
+       <div>
+        <div style="float:left;width: 80%;" ></div>
+        <div id="ucase2" style="height: 30px;width: 100px;float:right;border-radius: 10px;margin-bottom: 5px;color: white;background-color: #1e4dba; clear: both;text-align: center;cursor: pointer;  " >
+          Tomcat
+       </div>
+       </div>      
+          <hr>
+         <div>
+      <div style="float:left;width:80%" ></div>
+          <div id="ucase3" style="height: 30px;width: 100px;float:right;border-radius: 10px;margin-bottom: 5px;color: white;background-color: #1e4dba;clear: both; text-align: center;cursor: pointer;  " >
+            Maven
+         </div>
+    </div>
+      
+       
+        </div>
+      </div>
+      <div class="form-content" data-form-tab>
+        <div style="background-color: lightgray; padding: 15px; line-height: 2">
+          <h1>How to install Java on Windows</h1>
+          <div style="margin-left: 20px">
+            <ul style="list-style: decimal">
+              <li>Download Java for Windows.</li>
+              <li>Run the Java installer.</li>
+              <li>Validate the JAVA_HOME setting.</li>
+              <li>Confirm the Java PATH variable was set properly.</li>
+              <li>Run a JDK command to verify Java install was a success.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-content" data-form-tab>
+        <div style="background-color: lightgray; padding: 15px; line-height: 2">
+          <h1>How to install Java on Windows</h1>
+          <div style="margin-left: 20px">
+            <ul style="list-style: decimal">
+              <li>Download Java for Windows.</li>
+              <li>Run the Java installer.</li>
+              <li>Validate the JAVA_HOME setting.</li>
+              <li>Confirm the Java PATH variable was set properly.</li>
+              <li>Run a JDK command to verify Java install was a success.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-content" data-form-tab>
+        <div style="background-color: lightgray; padding: 15px; line-height: 2">
+          <h1>How to install Java on Windows</h1>
+          <div style="margin-left: 20px">
+            <ul style="list-style: decimal">
+              <li>Download Java for Windows.</li>
+              <li>Run the Java installer.</li>
+              <li>Validate the JAVA_HOME setting.</li>
+              <li>Confirm the Java PATH variable was set properly.</li>
+              <li>Run a JDK command to verify Java install was a success.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-content" data-form-tab>
+        <div style="background-color: lightgray; padding: 15px; line-height: 2">
+          <h1>How to install Java on Windows</h1>
+          <div style="margin-left: 20px">
+            <ul style="list-style: decimal">
+              <li>Download Java for Windows.</li>
+              <li>Run the Java installer.</li>
+              <li>Validate the JAVA_HOME setting.</li>
+              <li>Confirm the Java PATH variable was set properly.</li>
+              <li>Run a JDK command to verify Java install was a success.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button class="btn bordered" type="button" data-btn-previous="true">
+          Return
+        </button>
+        <button class="btn primary" type="button" data-btn-next="true">
+          Next
+        </button>
+      </div>
+    </form>
+  </div>
+    <script>
+      var i = 0;
+      let tapmsg1 = "welcome to java,  One of the most significant advantages of Java is its ability to move easily from one computer system to another. The ability to run the same program on many different systems is crucial to World Wide Web software, and Java succeeds at this by being platform-independent at both the source and binary levels.";
+      let jdkmsg = "Download java for windows. Run the java installer, Validate the JAVA_Home settings. Confirm the java path variable was set properly. Run JDK command to verify java install was a success";
+      var speed = 50;    
+      var tapmsg1length = tapmsg1.length; 
+      function typeWriter() {       
+        if (i < tapmsg1.length) {
+          document.getElementById("loadtap1").innerHTML += tapmsg1.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+          if(i== (tapmsg1length-1)){
+            
+            $("#ucase1").show();
+            $("#ucase2").show();
+            $("#ucase3").show();
+            $("#ucase2").attr('disabled','disabled');
+            $("#ucase3").attr('disabled','disabled');
+            $("#loadtap1").attr('disabled','disabled');
+          }
+        }       
+      }
+
+      var j=0;
+      function typewriterjdk(){
+        if (j < jdkmsg.length) {
+          document.getElementById("loadjdk").innerHTML += jdkmsg.charAt(j);
+          j++;
+          setTimeout(typewriterjdk, speed);          
+        }      
+      }
+
+       $("#ucase1").hide();
+       $("#ucase2").hide();
+       $("#ucase3").hide();
+
+      let wizardBar = document.querySelector("[data-wizard-bar]");
+      let btnPrevious = document.querySelector("[data-btn-previous]");
+      let currentTab = 0;
+      showTab(currentTab);
+
+      function showTab(n) {
+        console.log("tab is " + n);
+        let formTabs = document.querySelectorAll("[data-form-tab]");
+        let wizardItem = document.querySelectorAll("[data-wizard-item]");
+        formTabs[n].classList.add("active");
+        wizardItem[n].classList.add("active");
+
+        if (n == 0) {
+          btnPrevious.style.display = "none";
+        } else {
+          btnPrevious.style.display = "block";
+        }
+
+        if (n == 0) {
+          PlayTab1();
+        } else if (n == 1) {
+          PlayTab2();
+        } else if (n == 3) {
+          PlayTab3();
+        } else if (n == 4) {
+          PlayTab4();
+        }
+      }
+
+      function nextPrev(n) {
+        let formTabs = document.querySelectorAll("[data-form-tab]");
+
+        if (n == 1 && !validateForm()) return false;
+
+        formTabs[currentTab].classList.remove("active");
+        currentTab = currentTab + n;
+        showTab(currentTab);
+      }
+
+      function validateForm() {
+        let formTabs,
+          formInputs,
+          i,
+          valid = true;
+        formTabs = document.querySelectorAll("[data-form-tab]");
+        formInputs = formTabs[currentTab].querySelectorAll("[data-form-input]");
+        let formItem =
+          formTabs[currentTab].querySelectorAll("[data-form-item]");
+
+        for (i = 0; i < formInputs.length; i++) {
+          if (formInputs[i].value == "") {
+            formItem[i].className += " has-error";
+            valid = false;
+          }
+        }
+        return valid;
+      }
+
+      function updateWizardBarWidth() {
+        const activeWizards = document.querySelectorAll(".wizard-item.active");
+        let wizardItem = document.querySelectorAll("[data-wizard-item]");
+        const currentWidth =
+          ((activeWizards.length - 1) / (wizardItem.length - 1)) * 100;
+
+        wizardBar.style.width = currentWidth + "%";
+      }
+
+      document.querySelector("*").addEventListener("click", function (event) {
+        if (event.target.dataset.btnPrevious) {
+          let wizardItem = document.querySelectorAll("[data-wizard-item]");
+          wizardItem[currentTab].classList.remove("active");
+          nextPrev(-1);
+          updateWizardBarWidth();
+        }
+        if (event.target.dataset.btnNext) {
+          nextPrev(1);
+          updateWizardBarWidth();
+        }
+      });
+
+     function playUcase1(){
+      let text =
+          "Download java for windows. Run the java installer, Validate the JAVA_Home settings. Confirm the java path variable was set properly. Run JDK command to verify java install was a success.";
+          typewriterjdk();
+        var jdkmsg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        jdkmsg.text = text;      
+        speechSynthesis.speak(jdkmsg);   
+     }
+      function PlayTab1() {
+        console.log("playtab1 called");
+        let text =
+          "welcome to java,  One of the most significant advantages of Java is its ability to move easily from one computer system to another. The ability to run the same program on many different systems is crucial to World Wide Web software, and Java succeeds at this by being platform-independent at both the source and binary levels.";
+        typeWriter();
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.text = text;
+        msg.onend = function (e) {
+          console.log("Finished in " + event.elapsedTime + " seconds.");
+        };
+        speechSynthesis.speak(msg);    
+         
+      //   $("#ucase1").show();
+      //  $("#ucase2").show();
+      //  $("#ucase3").show();   
+      }
+
+      function PlayTab2() {
+        console.log("playtab2 called");
+        let text =
+          "How to install Java on Windows. Download Java for Windows. Run the Java installer Validate the JAVA_HOME setting.Confirm the Java PATH variable was set properly.";
+
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.text = text;
+        msg.onend = function (e) {
+          console.log("Finished in " + event.elapsedTime + " seconds.");
+        };
+        speechSynthesis.speak(msg);
+      }
+
+      function PlayTab3() {}
+      function PlayTab4() {}
+    </script>
+  </body>
+</html>
