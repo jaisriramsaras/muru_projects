@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>working with one function</h1>
+    <div  style="background-color: lightgray; min-height: 200px; color: black;" >
+       <p id="loadtap1">
+       </p>
+       <p id="loadtap2">
+      </p>
+      <p id="loadtap3">
+      </p>
+      <p id="loadtap4">
+      </p>
+      <p id="loadtap5">
+      </p>
+    </div>
+    <button onclick="test()" >playtap1</button>
+    <button onclick="test2()" >playtap1</button>
+    <button onclick="test3()" >playtap1</button>
+    <button onclick="test4()" >playtap1</button>
+    <button onclick="test5()" >playtap1</button>
+
+    <script>
+            var speed = 50;    
+ var i =0;
+ var tapmsg1 = "welcome to java,  One of the most significant advantages of Java .";
+ var tapmsg2 = "this is tap2 text what we learning from of Java .";
+ var tapmsg3 = "this is tap3 text so learn spring from .";
+ var tapmsg4 = "this is 4th tab text.";
+ var tapmsg5 = "this is 5th tab text  .";
+
+ function PlayTypeWriter (textmsg, loadElem ) {       
+      var pos = 0;
+      console.log("playtypewriter started " + textmsg.length);
+    function PlayRecursive(){
+        if (pos < textmsg.length) {          
+          document.getElementById(loadElem).innerHTML += textmsg.charAt(pos);
+          pos++;
+          setTimeout(PlayRecursive, speed);
+          
+        }   
+    }
+    PlayRecursive();
+}
+
+
+
+function PlayMyTab(playtext, elmId){
+    //console.log("playmytab started " + playtext );
+    PlayTypeWriter(playtext, elmId);
+       var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.text = playtext;
+        msg.onend = function (e) {
+          console.log("Finished in " + event.elapsedTime + " seconds.");
+        };
+        speechSynthesis.speak(msg);
+}
+
+function test(){
+   
+    PlayMyTab(tapmsg1, "loadtap1");
+}
+function test2(){
+  
+    PlayMyTab(tapmsg2, "loadtap2");
+}
+function test3(){
+  
+    PlayMyTab(tapmsg3, "loadtap3");
+}
+function test4(){
+  
+  PlayMyTab(tapmsg4, "loadtap4");
+}
+function test5(){
+  
+  PlayMyTab(tapmsg5, "loadtap5");
+}
+
+    </script>
+    
+</body>
+</html>
