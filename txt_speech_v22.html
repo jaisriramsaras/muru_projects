@@ -374,7 +374,7 @@
 						</div>
 					</div>
 					<div class="form-content" data-form-tab>
-						<div style="background-color: lightgray; padding: 15px; line-height: 2">
+						<div style="background-color: whitesmoke; padding: 15px; line-height: 2">
 							<h1> stepper3 Java servlet</h1>
 							<div style="margin-left: 20px">
 								<p id="loadstepper3">
@@ -383,7 +383,7 @@
 						</div>
 					</div>
 					<div class="form-content" data-form-tab>
-						<div style="background-color: lightgray; padding: 15px; line-height: 2">
+						<div style="background-color: whitesmoke; padding: 15px; line-height: 2">
 							<h1> stepper4 How to learn spring</h1>
 							<div style="margin-left: 20px">
 								<p id="loadstepper4">
@@ -392,7 +392,7 @@
 						</div>
 					</div>
 					<div class="form-content" data-form-tab>
-						<div style="background-color: lightgray; padding: 15px; line-height: 2">
+						<div style="background-color: whitesmoke; padding: 15px; line-height: 2">
 							<h1>stepper5 How to learn hibernate</h1>
 							<div style="margin-left: 20px">
 								<p id="loadstepper5">
@@ -490,7 +490,7 @@ window.speechSynthesis.onvoiceschanged = () => {
 	$("#imgbox").hide();
     $("#mainbox_step1").hide();
   //  $("#mainbox_step2").hide();
-  $("btnfaqmute").hide();
+ // $("btnfaqmute").hide();
     $("#mainbox_faq").hide();
 	var mainstatus = "";
 	var ismaventomcatjdk = false;
@@ -643,26 +643,6 @@ $("#btnmute").click(function () {
       })
    });
 
-//    var elemfaq = document.getElementById("btnfaqmute");
-//    elemfaq.innerHTML = unmuteIcon;
-//  play=1;
-// $("#btnfaqmute").click(function () {
-// 	console.log("faq buton clciked");
-//       $(this).text(function(i, text){        
-// 		if(play==1){
-// 			window.speechSynthesis.pause();	
-// 			elemfaq.innerHTML = muteIcon;
-// 	     	play=0;
-// 		}else{
-// 			play =1;
-// 			window.speechSynthesis.resume();			
-// 			elemfaq.innerHTML = unmuteIcon;
-// 		}		 
-//       })
-//    });
-   
-
-
 	function eatstart() {
 		//$("#btnfaqmute").hide();
 		$("#btnmute").show();
@@ -722,6 +702,7 @@ $("#btnmute").click(function () {
 		$("#btneat").removeClass("active");
 		$("#btnfaq").removeClass("active");
 		$("#btnprod").addClass("active");
+		$("#btnnext").show();
 	}
 
 	function FaqStart() {
@@ -750,6 +731,7 @@ $("#btnmute").click(function () {
 		$("#btnfaq").addClass("active");
 		$("#btnprod").removeClass("active");     
 		play=1;
+		
 
 	}
 
@@ -821,30 +803,37 @@ $("#btnmute").click(function () {
 		PlayTypeWriter(playtext, elmId);
 	
 		playspeech.text = playtext;
-		
-		if(isComplete == false) {
+		if(mainstatus ==="eat"){
+			if(isComplete == false) {
 				isComplete = true;
 				$("#ucase1").show();
 				$("#ucase2").show();
 				$("#ucase3").show();
 			}
+		}
 		
 		window.speechSynthesis.speak(playspeech);
 	}
 	//end single 
 	function playUcase1() {
+		window.speechSynthesis.cancel();
+		$("#btnmute").show();
 		let jdkurl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBY9Vwr595MUJQiDtPB1L97AxpupQaXhbLoNAwPxAHSgOrYgsj3zd_WAU9uwBfmzUu6ZA&usqp=CAU";
 		$("#imgbox").attr("src", jdkurl);
 		PlayMyTab(jdkmsg, "loadjdk");
 	}
 
 	function playUcase2() {
+		window.speechSynthesis.cancel();
+		$("#btnmute").show();
 		let tomurl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbEVpfcA-3idliYdymJvq6Gkfo6tbrcijRu9oMDtoAg3s3rplNmF4VrCxeK_DuoOKsu88&usqp=CAU";
 		$("#imgbox").attr("src", tomurl);
 		PlayMyTab(tomcatmsg, "loadtomcat");
 	}
 
 	function playUcase3() {
+		window.speechSynthesis.cancel();
+		$("#btnmute").show();
 		let mvnurl = "https://onurdesk.com/wp-content/uploads/2021/05/kisspng-apache-maven-apache-ant-gradle-apache-http-server-apache-maven-5b194e571b97f1.295739891528385111113.jpg";
 		$("#imgbox").attr("src", mvnurl);
 		PlayMyTab(mavenmsg, "loadmaven");
@@ -854,9 +843,9 @@ $("#btnmute").click(function () {
 	 //faq start
 
     function PlayQuestion1(){
-		
-		$("#btnfaqmute").show();
-		
+		window.speechSynthesis.cancel();
+		//$("#btnfaqmute").show();
+		$("#btnmute").show();
 
         $("#q1ans").empty();
         PlayMyTab(faq_q1_answer, "q1ans");
@@ -864,18 +853,18 @@ $("#btnmute").click(function () {
         $("#imgq1").attr('src', faq_q1_imgurl);
     }
     function PlayQuestion2(){
-		
-		$("#btnfaqmute").show();
-	
+		window.speechSynthesis.cancel();
+	//	$("#btnfaqmute").show();
+	$("#btnmute").show();
         $("#q2ans").empty();
         PlayMyTab(faq_q2_answer, "q2ans");
         $("#imgq2").show();
         $("#imgq2").attr('src', faq_q2_imgurl);
     }
     function PlayQuestion3(){
-		
-		$("#btnfaqmute").show();
-
+		window.speechSynthesis.cancel();
+	//	$("#btnfaqmute").show();
+	$("#btnmute").show();
         $("#q3ans").empty();
         PlayMyTab(faq_q3_answer, "q3ans");
         $("#imgq3").show();
